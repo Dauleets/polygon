@@ -4,35 +4,35 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/constant.dart';
 
-const String LAGUAGE_CODE = 'languageCode';
+const String langCode = 'languageCode';
 
 //languages code
-const String ENGLISH = 'en';
-const String RUSSIAN = 'ru';
-const String KAZAKH = 'kk';
+const String english = 'en';
+const String russian = 'ru';
+const String kazakh = 'kk';
 
 Future<Locale> setLocale(String languageCode) async {
   SharedPreferences prefs = await sharedPreferences;
-  await prefs.setString(LAGUAGE_CODE, languageCode);
+  await prefs.setString(langCode, languageCode);
   return _locale(languageCode);
 }
 
 Future<Locale> getLocale() async {
   SharedPreferences prefs = await sharedPreferences;
-  String languageCode = prefs.getString(LAGUAGE_CODE) ?? RUSSIAN;
+  String languageCode = prefs.getString(langCode) ?? russian;
   return _locale(languageCode);
 }
 
 Locale _locale(String languageCode) {
   switch (languageCode) {
-    case ENGLISH:
-      return const Locale(ENGLISH, '');
-    case RUSSIAN:
-      return const Locale(RUSSIAN, '');
-    case KAZAKH:
-      return const Locale(KAZAKH, '');
+    case english:
+      return const Locale(english, '');
+    case russian:
+      return const Locale(russian, '');
+    case kazakh:
+      return const Locale(kazakh, '');
     default:
-      return const Locale(RUSSIAN, '');
+      return const Locale(russian, '');
   }
 }
 

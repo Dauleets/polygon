@@ -7,6 +7,7 @@ import '../error/network_info.dart';
 
 // Global constants
 final mainUrl = dotenv.env['API_URL'];
+final apiKey = dotenv.env['API_KEY'];
 final sharedPreferences = SharedPreferences.getInstance();
 final dio = Dio()
   ..interceptors.add(PrettyDioLogger(
