@@ -35,22 +35,22 @@ class TextThemes {
   static TextTheme textTheme(BuildContext context) {
     return Theme.of(context).textTheme.copyWith(
           displayLarge: const TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 24,
+            fontFamily: 'SF-Pro-Display',
+            fontSize: 26,
             fontWeight: FontWeight.w600,
-            color: AppColors.colorWhite,
+            color: Colors.black,
           ),
           displayMedium: const TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
+            fontFamily: 'SF-Pro-Display',
+            fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: AppColors.colorBlack,
+            color: Colors.black,
           ),
           displaySmall: const TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 14,
+            fontFamily: 'SF-Pro-Display',
+            fontSize: 10,
             fontWeight: FontWeight.w400,
-            color: AppColors.colorBlack,
+            color: Colors.black,
           ),
         );
   }

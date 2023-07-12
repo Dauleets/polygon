@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'common/theme/theme.dart';
 import 'feature/polygon/home/veiew/pages/home_page.dart';
 
 void main() {
@@ -10,6 +11,10 @@ class MainWidget extends StatelessWidget {
   const MainWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(title: 'Polygon Demo', home: HomePage());
+    return MaterialApp(
+        title: 'Polygon Demo',
+        debugShowCheckedModeBanner: false,
+        theme: Styles.themeData(context),
+        home: HomePage());
   }
 }
