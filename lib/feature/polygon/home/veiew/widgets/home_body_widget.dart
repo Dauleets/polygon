@@ -22,7 +22,7 @@ class _HomePageBodyWidgetState extends State<HomePageBodyWidget> {
 
   Future<void> _refreshData() async {
     DateTime today = DateTime.now();
-    DateTime yesterday = today.subtract(const Duration(days: 1));
+    DateTime yesterday = today.subtract(const Duration(days: 2));
     String formattedDate = DateFormat('yyyy-MM-dd').format(yesterday);
     bloc.add(GetGroupedDailyEvent(formattedDate));
   }

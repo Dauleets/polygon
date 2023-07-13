@@ -6,7 +6,7 @@ class AggregatesModels extends AggregatesEntity {
     required int queryCount,
     required int resultsCount,
     required bool adjusted,
-    required List<ResultEntity> results,
+    required List<Result> results,
     required String status,
     required String requestId,
     required int count,
@@ -25,7 +25,7 @@ class AggregatesModels extends AggregatesEntity {
 
   factory AggregatesModels.fromJson(Map<String, dynamic> json) {
     List<dynamic> resultsJson = json['results'];
-    List<ResultEntity> results =
+    List<Result> results =
         resultsJson.map((resultJson) => Result.fromJson(resultJson)).toList();
 
     return AggregatesModels(
@@ -43,35 +43,26 @@ class AggregatesModels extends AggregatesEntity {
   }
 }
 
-class Result extends ResultEntity {
-  // final double c;
-  // final double h;
-  // final double l;
-  // final int n;
-  // final double o;
-  // final int t;
-  // final double v;
-  // final double vw;
+class Result {
+  final int t; // Updated type to int
+  final double c;
+  final double h;
+  final double l;
+  final int n;
+  final double o;
+  final double v;
+  final double vw;
 
-  const Result({
-    required double c,
-    required double h,
-    required double l,
-    required int n,
-    required double o,
-    required int t,
-    required double v,
-    required double vw,
-  }) : super(
-          c: c,
-          h: h,
-          l: l,
-          n: n,
-          o: o,
-          t: t,
-          v: v,
-          vw: vw,
-        );
+  Result({
+    required this.t,
+    required this.c,
+    required this.h,
+    required this.l,
+    required this.n,
+    required this.o,
+    required this.v,
+    required this.vw,
+  });
 
   factory Result.fromJson(Map<String, dynamic> json) {
     return Result(

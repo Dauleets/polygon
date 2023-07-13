@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:polygontrade/feature/polygon/data/models/aggregates_models.dart';
 import 'package:polygontrade/feature/polygon/portfiolio/bloc/aggs_chart_bloc.dart';
 import 'package:polygontrade/feature/polygon/portfiolio/veiew/widgets/aggs_chart_widget.dart';
 import '../../../../../common/theme/colors.dart';
 import '../../../../../common/widgets/loading.dart';
+import '../../../data/models/aggregates_models.dart';
 import '../../../domain/entity/aggregates_entity.dart';
 
 class PortFolioPage extends StatelessWidget {
@@ -83,7 +83,7 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
   Future<void> _refreshData() async {
     DateTime currentDate = DateTime.now();
 
-    DateTime oneDayAgo = currentDate.subtract(Duration(days: 1));
+    DateTime oneDayAgo = currentDate.subtract(Duration(days: 2));
     DateTime fiveDaysAgo = currentDate.subtract(Duration(days: 5));
     DateTime oneWeekAgo = currentDate.subtract(Duration(days: 7));
     DateTime oneMonthAgo =
@@ -182,12 +182,14 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
               currentDate.year, currentDate.month - 1, currentDate.day);
           DateTime threeMonthsAgo = DateTime(
               currentDate.year, currentDate.month - 3, currentDate.day);
+          print(oneDayAgo);
+          print(fiveDaysAgo);
 
           DateFormat dateFormat = DateFormat('yyyy-MM-dd');
           tabContents = [
             MyChartWidget(
-              startTime: oneDayAgo,
-              endTime: oneDayAgo,
+              startTime: dateFormat.format(oneDayAgo),
+              endTime: dateFormat.format(oneDayAgo),
               chartData: [
                 Result(
                     c: state.groupedDailyState.results[0].c,
@@ -201,8 +203,8 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
               ],
             ),
             MyChartWidget(
-              startTime: fiveDaysAgo,
-              endTime: oneDayAgo,
+              startTime: dateFormat.format(fiveDaysAgo),
+              endTime: dateFormat.format(oneDayAgo),
               chartData: [
                 Result(
                     c: state.groupedDailyState.results[0].c,
@@ -216,8 +218,8 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
               ],
             ),
             MyChartWidget(
-              startTime: oneWeekAgo,
-              endTime: oneDayAgo,
+              startTime: dateFormat.format(oneWeekAgo),
+              endTime: dateFormat.format(oneDayAgo),
               chartData: [
                 Result(
                     c: state.groupedDailyState.results[0].c,
@@ -231,8 +233,8 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
               ],
             ),
             MyChartWidget(
-              startTime: oneMonthAgo,
-              endTime: oneDayAgo,
+              startTime: dateFormat.format(oneMonthAgo),
+              endTime: dateFormat.format(oneDayAgo),
               chartData: [
                 Result(
                     c: state.groupedDailyState.results[0].c,
@@ -246,8 +248,8 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
               ],
             ),
             MyChartWidget(
-              startTime: threeMonthsAgo,
-              endTime: oneDayAgo,
+              startTime: dateFormat.format(threeMonthsAgo),
+              endTime: dateFormat.format(oneDayAgo),
               chartData: [
                 Result(
                     c: state.groupedDailyState.results[0].c,
@@ -312,7 +314,9 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
                                     .textTheme
                                     .displaySmall!
                                     .copyWith(
-                                      color: AppColors.textDark,
+                                      color: selectedTabIndex == index
+                                          ? AppColors.white
+                                          : AppColors.textDark,
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
@@ -326,7 +330,7 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
                   ),
                   const LineGreyPorftolioWidget(),
 
-                  tabContents[0],
+                  tabContents[1],
                   const LineGreyPorftolioWidget(),
 
                   // tabContents[selectedTabIndex],

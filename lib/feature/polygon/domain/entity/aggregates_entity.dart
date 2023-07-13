@@ -1,11 +1,13 @@
 import 'package:equatable/equatable.dart';
 
+import '../../data/models/aggregates_models.dart';
+
 class AggregatesEntity extends Equatable {
   final String ticker;
   final int queryCount;
   final int resultsCount;
   final bool adjusted;
-  final List<ResultEntity> results;
+  final List<Result> results;
   final String status;
   final String requestId;
   final int count;
@@ -35,29 +37,4 @@ class AggregatesEntity extends Equatable {
         count,
         time,
       ];
-}
-
-class ResultEntity extends Equatable {
-  final double c;
-  final double h;
-  final double l;
-  final int n;
-  final double o;
-  final int t;
-  final double v;
-  final double vw;
-
-  const ResultEntity({
-    required this.c,
-    required this.h,
-    required this.l,
-    required this.n,
-    required this.o,
-    required this.t,
-    required this.v,
-    required this.vw,
-  });
-
-  @override
-  List<Object?> get props => [c, h, l, n, o, t, v, vw];
 }
