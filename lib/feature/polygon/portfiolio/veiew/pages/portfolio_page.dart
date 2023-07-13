@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
+import 'package:polygontrade/feature/polygon/data/models/aggregates_models.dart';
+import 'package:polygontrade/feature/polygon/portfiolio/bloc/aggs_chart_bloc.dart';
+import 'package:polygontrade/feature/polygon/portfiolio/veiew/widgets/aggs_chart_widget.dart';
 import '../../../../../common/theme/colors.dart';
+import '../../../../../common/widgets/loading.dart';
+import '../../../domain/entity/aggregates_entity.dart';
 
 class PortFolioPage extends StatelessWidget {
-  const PortFolioPage({super.key});
+  final String ticker;
+  const PortFolioPage({super.key, required this.ticker});
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +23,17 @@ class PortFolioPage extends StatelessWidget {
             .textTheme
             .displayLarge!
             .copyWith(fontWeight: FontWeight.w400),
-        title: const Padding(
+        title: Padding(
           padding: EdgeInsets.only(left: 3),
           child: Text(
-            'BTC / USDT',
+            ticker,
           ),
+        ),
+        leading: IconButton(
+          icon: SvgPicture.asset('assets/icon/back.svg'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         actions: [
           IconButton(
@@ -37,6 +51,218 @@ class PortFolioPage extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 22),
+
+              // DetailedDataDisplayCryptoChartWidget(chartData: []),
+              DateTabBarChartsWidget(ticker: ticker),
+              const LineGreyPorftolioWidget(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DateTabBarChartsWidget extends StatefulWidget {
+  final String ticker;
+  const DateTabBarChartsWidget({super.key, required this.ticker});
+
+  @override
+  State<DateTabBarChartsWidget> createState() => _DateTabBarChartsWidgetState();
+}
+
+class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
+  late AggsChartBloc bloc;
+
+  late AggregatesEntity fecthOneDayAgoFormatted;
+  late AggregatesEntity fecthFiveDaysAgoFormatted;
+  late AggregatesEntity fecthOneWeekAgoFormatted;
+  late AggregatesEntity fecthOneMonthAgoFormatted;
+  late AggregatesEntity fecthThreeMonthsAgoFormatted;
+  late List<AggregatesEntity> listEntity;
+  Future<void> _refreshData() async {
+    DateTime currentDate = DateTime.now();
+
+    DateTime oneDayAgo = currentDate.subtract(Duration(days: 1));
+    DateTime fiveDaysAgo = currentDate.subtract(Duration(days: 5));
+    DateTime oneWeekAgo = currentDate.subtract(Duration(days: 7));
+    DateTime oneMonthAgo =
+        DateTime(currentDate.year, currentDate.month - 1, currentDate.day);
+    DateTime threeMonthsAgo =
+        DateTime(currentDate.year, currentDate.month - 3, currentDate.day);
+
+    DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+    fecthOneDayAgoFormatted = AggregatesEntity(
+        time: dateFormat.format(oneDayAgo),
+        adjusted: false,
+        count: 0,
+        queryCount: 0,
+        requestId: '',
+        results: [],
+        resultsCount: 0,
+        status: '',
+        ticker: widget.ticker);
+    fecthFiveDaysAgoFormatted = AggregatesEntity(
+        time: dateFormat.format(fiveDaysAgo),
+        adjusted: false,
+        count: 0,
+        queryCount: 0,
+        requestId: '',
+        results: [],
+        resultsCount: 0,
+        status: '',
+        ticker: widget.ticker);
+    fecthOneWeekAgoFormatted = AggregatesEntity(
+        time: dateFormat.format(oneWeekAgo),
+        adjusted: false,
+        count: 0,
+        queryCount: 0,
+        requestId: '',
+        results: [],
+        resultsCount: 0,
+        status: '',
+        ticker: widget.ticker);
+    fecthOneMonthAgoFormatted = AggregatesEntity(
+        time: dateFormat.format(oneMonthAgo),
+        adjusted: false,
+        count: 0,
+        queryCount: 0,
+        requestId: '',
+        results: [],
+        resultsCount: 0,
+        status: '',
+        ticker: widget.ticker);
+    fecthThreeMonthsAgoFormatted = AggregatesEntity(
+        time: dateFormat.format(threeMonthsAgo),
+        adjusted: false,
+        count: 0,
+        queryCount: 0,
+        requestId: '',
+        results: [],
+        resultsCount: 0,
+        status: '',
+        ticker: widget.ticker);
+    listEntity = [
+      fecthOneDayAgoFormatted,
+      fecthFiveDaysAgoFormatted,
+      fecthOneWeekAgoFormatted,
+      fecthOneWeekAgoFormatted,
+      fecthOneMonthAgoFormatted,
+      fecthThreeMonthsAgoFormatted
+    ];
+    bloc.add(GetAggsChartEvent(fecthOneDayAgoFormatted));
+  }
+
+  @override
+  void initState() {
+    bloc = BlocProvider.of<AggsChartBloc>(context);
+    _refreshData(); // Initial data load
+
+    super.initState();
+  }
+
+  late List<Widget> tabContents;
+
+  int selectedTabIndex = 0;
+
+  List<String> tabs = ['1Д', '5Д', '1Н', '1МЕС', '3МЕС'];
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<AggsChartBloc, AggsChartState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        if (state is AggsChartStateLoaded) {
+          DateTime currentDate = DateTime.now();
+
+          DateTime oneDayAgo = currentDate.subtract(Duration(days: 1));
+          DateTime fiveDaysAgo = currentDate.subtract(Duration(days: 5));
+          DateTime oneWeekAgo = currentDate.subtract(Duration(days: 7));
+          DateTime oneMonthAgo = DateTime(
+              currentDate.year, currentDate.month - 1, currentDate.day);
+          DateTime threeMonthsAgo = DateTime(
+              currentDate.year, currentDate.month - 3, currentDate.day);
+
+          DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+          tabContents = [
+            MyChartWidget(
+              startTime: oneDayAgo,
+              endTime: oneDayAgo,
+              chartData: [
+                Result(
+                    c: state.groupedDailyState.results[0].c,
+                    h: state.groupedDailyState.results[0].h,
+                    l: state.groupedDailyState.results[0].l,
+                    n: state.groupedDailyState.results[0].n,
+                    o: state.groupedDailyState.results[0].o,
+                    t: state.groupedDailyState.results[0].t,
+                    v: state.groupedDailyState.results[0].v,
+                    vw: state.groupedDailyState.results[0].vw)
+              ],
+            ),
+            MyChartWidget(
+              startTime: fiveDaysAgo,
+              endTime: oneDayAgo,
+              chartData: [
+                Result(
+                    c: state.groupedDailyState.results[0].c,
+                    h: state.groupedDailyState.results[0].h,
+                    l: state.groupedDailyState.results[0].l,
+                    n: state.groupedDailyState.results[0].n,
+                    o: state.groupedDailyState.results[0].o,
+                    t: state.groupedDailyState.results[0].t,
+                    v: state.groupedDailyState.results[0].v,
+                    vw: state.groupedDailyState.results[0].vw)
+              ],
+            ),
+            MyChartWidget(
+              startTime: oneWeekAgo,
+              endTime: oneDayAgo,
+              chartData: [
+                Result(
+                    c: state.groupedDailyState.results[0].c,
+                    h: state.groupedDailyState.results[0].h,
+                    l: state.groupedDailyState.results[0].l,
+                    n: state.groupedDailyState.results[0].n,
+                    o: state.groupedDailyState.results[0].o,
+                    t: state.groupedDailyState.results[0].t,
+                    v: state.groupedDailyState.results[0].v,
+                    vw: state.groupedDailyState.results[0].vw)
+              ],
+            ),
+            MyChartWidget(
+              startTime: oneMonthAgo,
+              endTime: oneDayAgo,
+              chartData: [
+                Result(
+                    c: state.groupedDailyState.results[0].c,
+                    h: state.groupedDailyState.results[0].h,
+                    l: state.groupedDailyState.results[0].l,
+                    n: state.groupedDailyState.results[0].n,
+                    o: state.groupedDailyState.results[0].o,
+                    t: state.groupedDailyState.results[0].t,
+                    v: state.groupedDailyState.results[0].v,
+                    vw: state.groupedDailyState.results[0].vw)
+              ],
+            ),
+            MyChartWidget(
+              startTime: threeMonthsAgo,
+              endTime: oneDayAgo,
+              chartData: [
+                Result(
+                    c: state.groupedDailyState.results[0].c,
+                    h: state.groupedDailyState.results[0].h,
+                    l: state.groupedDailyState.results[0].l,
+                    n: state.groupedDailyState.results[0].n,
+                    o: state.groupedDailyState.results[0].o,
+                    t: state.groupedDailyState.results[0].t,
+                    v: state.groupedDailyState.results[0].v,
+                    vw: state.groupedDailyState.results[0].vw)
+              ],
+            ),
+          ];
+          return Column(
+            children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -49,84 +275,93 @@ class PortFolioPage extends StatelessWidget {
                   ),
                   const SizedBox(width: 20),
                   Text(
-                    '32.340,52940',
+                    state.groupedDailyState.results[0].c.toString(),
                     style: Theme.of(context).textTheme.displayLarge!.copyWith(
                         fontWeight: FontWeight.w600, color: AppColors.textDark),
                   ),
                 ],
               ),
               const LineGreyPorftolioWidget(),
-              // DetailedDataDisplayCryptoChartWidget(chartData: []),
-              const DateTabBarChartsWidget(),
-              const LineGreyPorftolioWidget(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      for (int index = 0; index < tabs.length; index++)
+                        Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  bloc.add(
+                                      GetAggsChartEvent(listEntity[index]));
+                                  selectedTabIndex = index;
+                                });
+                              },
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                backgroundColor: selectedTabIndex == index
+                                    ? AppColors.primary
+                                    : Theme.of(context).scaffoldBackgroundColor,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 17, vertical: 0),
+                              ),
+                              child: Text(
+                                tabs[index],
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displaySmall!
+                                    .copyWith(
+                                      color: AppColors.textDark,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ),
 
-class DateTabBarChartsWidget extends StatefulWidget {
-  const DateTabBarChartsWidget({super.key});
-
-  @override
-  State<DateTabBarChartsWidget> createState() => _DateTabBarChartsWidgetState();
-}
-
-class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
-  int selectedTabIndex = 0;
-
-  List<String> tabs = ['1Д', '5Д', '1Н', '1МЕС', '3МЕС'];
-
-  // List<Widget> tabContents = [
-  //   DetailedDataDisplayCryptoChartWidget(chartData: []),
-  //   DetailedDataDisplayCryptoChartWidget(chartData: []),
-  //   DetailedDataDisplayCryptoChartWidget(chartData: []),
-  //   DetailedDataDisplayCryptoChartWidget(chartData: []),
-  //   DetailedDataDisplayCryptoChartWidget(chartData: []),
-  // ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                for (int index = 0; index < tabs.length; index++)
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedTabIndex = index;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: selectedTabIndex == index
-                          ? AppColors.primary
-                          : Theme.of(context).scaffoldBackgroundColor,
-                      padding: const EdgeInsets.symmetric(horizontal: 17),
-                    ),
-                    child: Text(
-                      tabs[index],
-                      style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                            color: AppColors.textDark,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
+                      // TabBarView
+                      // TabBarView(controller: Ta, children: tabContents)
+                    ],
                   ),
+                  const LineGreyPorftolioWidget(),
 
-                // TabBarView
-              ],
+                  tabContents[0],
+                  const LineGreyPorftolioWidget(),
+
+                  // tabContents[selectedTabIndex],
+                ],
+              )
+            ],
+          );
+        } else if (state is AggsChartStateLoading) {
+          return const SafeArea(child: Center(child: Loading()));
+        } else if (state is AggsChartStateError) {
+          return SafeArea(
+            child: Center(
+              child: Text(
+                state.error,
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                      color: AppColors.textDark,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
             ),
-            const LineGreyPorftolioWidget(),
-            // tabContents[selectedTabIndex],
-          ],
-        )
-      ],
+          );
+        } else {
+          return SafeArea(
+            child: Center(
+              child: Text(
+                'попробуйте позже',
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                      color: AppColors.textDark,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 }

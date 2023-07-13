@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:polygontrade/feature/polygon/home/bloc/grouped_daily_bloc.dart';
+import 'feature/polygon/portfiolio/bloc/aggs_chart_bloc.dart';
 import 'injection.dart' as di;
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -26,6 +27,7 @@ class MainWidget extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => di.sl<GroupedDailyBloc>()),
+        BlocProvider(create: (context) => di.sl<AggsChartBloc>()),
       ],
       child: MaterialApp(
         title: 'Polygon Demo',
