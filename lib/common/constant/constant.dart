@@ -12,3 +12,4 @@ final networkInfo = NetworkFailure();
 // api path
 const String getAllGroupedDailyUrl =
     'v2/aggs/grouped/locale/global/market/crypto/';
+const String getAggsTickerUrl = 'v2/aggs/ticker/';

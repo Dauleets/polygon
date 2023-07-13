@@ -3,7 +3,7 @@ class AggregatesModels {
   final int queryCount;
   final int resultsCount;
   final bool adjusted;
-  final List<TickerResult> results;
+  final List<Result> results;
   final String status;
   final String requestId;
   final int count;
@@ -21,9 +21,8 @@ class AggregatesModels {
 
   factory AggregatesModels.fromJson(Map<String, dynamic> json) {
     List<dynamic> resultsJson = json['results'];
-    List<TickerResult> results = resultsJson
-        .map((resultJson) => TickerResult.fromJson(resultJson))
-        .toList();
+    List<Result> results =
+        resultsJson.map((resultJson) => Result.fromJson(resultJson)).toList();
 
     return AggregatesModels(
       ticker: json['ticker'],
@@ -38,37 +37,37 @@ class AggregatesModels {
   }
 }
 
-class TickerResult {
-  final double v;
-  final double vw;
-  final double o;
+class Result {
   final double c;
   final double h;
   final double l;
-  final int tTimestamp;
   final int n;
+  final double o;
+  final int t;
+  final double v;
+  final double vw;
 
-  TickerResult({
-    required this.v,
-    required this.vw,
-    required this.o,
+  Result({
     required this.c,
     required this.h,
     required this.l,
-    required this.tTimestamp,
     required this.n,
+    required this.o,
+    required this.t,
+    required this.v,
+    required this.vw,
   });
 
-  factory TickerResult.fromJson(Map<String, dynamic> json) {
-    return TickerResult(
-      v: json['v'],
-      vw: json['vw'],
-      o: json['o'],
-      c: json['c'],
-      h: json['h'],
-      l: json['l'],
-      tTimestamp: json['t'],
+  factory Result.fromJson(Map<String, dynamic> json) {
+    return Result(
+      c: json['c'].toDouble(),
+      h: json['h'].toDouble(),
+      l: json['l'].toDouble(),
       n: json['n'],
+      o: json['o'].toDouble(),
+      t: json['t'],
+      v: json['v'].toDouble(),
+      vw: json['vw'].toDouble(),
     );
   }
 }
