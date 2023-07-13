@@ -6,6 +6,7 @@ import '../../../../../common/error/exception.dart';
 import '../../../../../common/error/failures.dart';
 import '../../../../../common/error/network_info.dart';
 import '../../domain/repository/repository.dart';
+import '../models/grouped_daily_models.dart';
 import '../remote_source/remote_source.dart';
 import '../remote_source/remote_source_impl.dart';
 
@@ -23,16 +24,17 @@ class RepositoryImpl implements Repository {
     }
   }
 
-  //   @override
-  // Future<Either<Failure, String>> signUp(UserEntity user) async {
-  //   try {
-  //     await _checkConnectivity();
-  //     final token = await loginRemoteDataSource.signUp(user);
-  //     return Right(token);
-  //   } on ServerException catch (error) {
-  //     return Left(ServerFailure(statusCode: error.response.statusCode));
-  //   } on NetworkException {
-  //     return Left(NetworkFailure());
-  //   }
-  // }
+  @override
+  Future<Either<Failure, GroupedDailyModels>> fetchAllGroupedDaily(
+      String time) async {
+    try {
+      await _checkConnectivity();
+      final groupedDaily = await loginRemoteDataSource.getAllGroupedDaily(time);
+      return Right(groupedDaily);
+    } on ServerException catch (error) {
+      return Left(ServerFailure(statusCode: error.response.statusCode));
+    } on NetworkException {
+      return Left(NetworkFailure());
+    }
+  }
 }
