@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:polygontrade/feature/polygon/portfiolio/veiew/pages/portfolio_page.dart';
 
 import '../../../../../common/theme/colors.dart';
 import '../../../../../common/widgets/loading.dart';
@@ -21,7 +22,7 @@ class _HomePageBodyWidgetState extends State<HomePageBodyWidget> {
 
   Future<void> _refreshData() async {
     DateTime today = DateTime.now();
-    DateTime yesterday = today.subtract(const Duration(days: 1));
+    DateTime yesterday = today.subtract(const Duration(days: 2));
     String formattedDate = DateFormat('yyyy-MM-dd').format(yesterday);
     bloc.add(GetGroupedDailyEvent(formattedDate));
   }
@@ -128,68 +129,84 @@ class _HomePageBodyWidgetState extends State<HomePageBodyWidget> {
                           final result = state.groupedDailyState.results[index];
                           return Column(
                             children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 22),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    // Ticker / Название
-                                    Expanded(
-                                      flex: 3,
-                                      child: Text(
-                                        result.t,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .displayMedium!
-                                            .copyWith(
-                                                fontWeight: FontWeight.w600),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => PortFolioPage(
+                                        ticker: state
+                                            .groupedDailyState.results[index].t
+                                            .toString(),
                                       ),
                                     ),
-                                    // Цена
-                                    Expanded(
-                                      flex: 1,
-                                      child: Text(
-                                        result.c.toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .displayMedium!
-                                            .copyWith(
-                                                fontWeight: FontWeight.w600),
+                                  );
+                                },
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 22),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // Ticker / Название
+                                      Expanded(
+                                        flex: 3,
+                                        child: Text(
+                                          result.t,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .displayMedium!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w600),
+                                        ),
                                       ),
-                                    ),
-                                    // Изм. % $
-                                    const SizedBox(width: 35),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            result.h.toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .displayMedium!
-                                                .copyWith(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: const Color.fromRGBO(
-                                                        99, 190, 55, 1)),
-                                          ),
-                                          Text(
-                                            result.l.toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .displaySmall!
-                                                .copyWith(
-                                                    color: AppColors
-                                                        .colorLigthGrey),
-                                          ),
-                                        ],
+                                      // Цена
+                                      Expanded(
+                                        flex: 1,
+                                        child: Text(
+                                          result.c.toString(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .displayMedium!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w600),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      // Изм. % $
+                                      const SizedBox(width: 35),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              result.h.toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .displayMedium!
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color:
+                                                          const Color.fromRGBO(
+                                                              99, 190, 55, 1)),
+                                            ),
+                                            Text(
+                                              result.l.toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .displaySmall!
+                                                  .copyWith(
+                                                      color: AppColors
+                                                          .colorLigthGrey),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               const Divider(),
@@ -204,7 +221,7 @@ class _HomePageBodyWidgetState extends State<HomePageBodyWidget> {
             ),
           );
         } else if (state is GroupedDailyStateLoading) {
-          return const SafeArea(child: Loading());
+          return const SafeArea(child: Center(child: Loading()));
         } else if (state is GroupedDailyStateError) {
           return SafeArea(
             child: Center(

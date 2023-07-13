@@ -13,14 +13,13 @@ import 'feature/polygon/data/remote_source/remote_source_impl.dart';
 import 'feature/polygon/data/repository/repository_impl.dart';
 import 'feature/polygon/domain/repository/repository.dart';
 import 'feature/polygon/home/bloc/grouped_daily_bloc.dart';
+import 'feature/polygon/portfiolio/bloc/aggs_chart_bloc.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerLazySingleton(() => GroupedDailyBloc());
-
-  // UseCase
-  // sl.registerLazySingleton(() => SignUpUsecase());
+  sl.registerLazySingleton(() => AggsChartBloc());
 
   // DataSource
   sl.registerLazySingleton<RemoteDataSource>(() => RemoteDataSourceImpl());
