@@ -24,7 +24,7 @@ class PortFolioPage extends StatelessWidget {
             .displayLarge!
             .copyWith(fontWeight: FontWeight.w400),
         title: Padding(
-          padding: EdgeInsets.only(left: 3),
+          padding: const EdgeInsets.only(left: 3),
           child: Text(
             ticker,
           ),
@@ -71,8 +71,10 @@ class DateTabBarChartsWidget extends StatefulWidget {
   State<DateTabBarChartsWidget> createState() => _DateTabBarChartsWidgetState();
 }
 
-class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
+class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget>
+    with SingleTickerProviderStateMixin {
   late AggsChartBloc bloc;
+  late TabController tabController;
 
   late AggregatesEntity fecthOneDayAgoFormatted;
   late AggregatesEntity fecthFiveDaysAgoFormatted;
@@ -83,9 +85,9 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
   Future<void> _refreshData() async {
     DateTime currentDate = DateTime.now();
 
-    DateTime oneDayAgo = currentDate.subtract(Duration(days: 2));
-    DateTime fiveDaysAgo = currentDate.subtract(Duration(days: 5));
-    DateTime oneWeekAgo = currentDate.subtract(Duration(days: 7));
+    DateTime oneDayAgo = currentDate.subtract(const Duration(days: 2));
+    DateTime fiveDaysAgo = currentDate.subtract(const Duration(days: 5));
+    DateTime oneWeekAgo = currentDate.subtract(const Duration(days: 7));
     DateTime oneMonthAgo =
         DateTime(currentDate.year, currentDate.month - 1, currentDate.day);
     DateTime threeMonthsAgo =
@@ -98,7 +100,7 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
         count: 0,
         queryCount: 0,
         requestId: '',
-        results: [],
+        results: const [],
         resultsCount: 0,
         status: '',
         ticker: widget.ticker);
@@ -108,7 +110,7 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
         count: 0,
         queryCount: 0,
         requestId: '',
-        results: [],
+        results: const [],
         resultsCount: 0,
         status: '',
         ticker: widget.ticker);
@@ -118,7 +120,7 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
         count: 0,
         queryCount: 0,
         requestId: '',
-        results: [],
+        results: const [],
         resultsCount: 0,
         status: '',
         ticker: widget.ticker);
@@ -128,7 +130,7 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
         count: 0,
         queryCount: 0,
         requestId: '',
-        results: [],
+        results: const [],
         resultsCount: 0,
         status: '',
         ticker: widget.ticker);
@@ -138,7 +140,7 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
         count: 0,
         queryCount: 0,
         requestId: '',
-        results: [],
+        results: const [],
         resultsCount: 0,
         status: '',
         ticker: widget.ticker);
@@ -157,8 +159,15 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
   void initState() {
     bloc = BlocProvider.of<AggsChartBloc>(context);
     _refreshData(); // Initial data load
-
+    tabController = TabController(length: tabs.length, vsync: this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+
+    super.dispose();
   }
 
   late List<Widget> tabContents;
@@ -175,9 +184,9 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
         if (state is AggsChartStateLoaded) {
           DateTime currentDate = DateTime.now();
 
-          DateTime oneDayAgo = currentDate.subtract(Duration(days: 1));
-          DateTime fiveDaysAgo = currentDate.subtract(Duration(days: 5));
-          DateTime oneWeekAgo = currentDate.subtract(Duration(days: 7));
+          DateTime oneDayAgo = currentDate.subtract(const Duration(days: 1));
+          DateTime fiveDaysAgo = currentDate.subtract(const Duration(days: 5));
+          DateTime oneWeekAgo = currentDate.subtract(const Duration(days: 7));
           DateTime oneMonthAgo = DateTime(
               currentDate.year, currentDate.month - 1, currentDate.day);
           DateTime threeMonthsAgo = DateTime(
@@ -283,54 +292,88 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
                   ),
                 ],
               ),
+              SizedBox(height: 10),
               const LineGreyPorftolioWidget(),
               Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      for (int index = 0; index < tabs.length; index++)
-                        Column(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  bloc.add(
-                                      GetAggsChartEvent(listEntity[index]));
-                                  selectedTabIndex = index;
-                                });
-                              },
-                              style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                backgroundColor: selectedTabIndex == index
-                                    ? AppColors.primary
-                                    : Theme.of(context).scaffoldBackgroundColor,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 17, vertical: 0),
-                              ),
-                              child: Text(
-                                tabs[index],
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displaySmall!
-                                    .copyWith(
-                                      color: selectedTabIndex == index
-                                          ? AppColors.white
-                                          : AppColors.textDark,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                              ),
-                            ),
-                          ],
-                        ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //   children: [
+                  //     for (int index = 0; index < tabs.length; index++)
+                  //       Column(
+                  //         children: [
+                  //           ElevatedButton(
+                  //             onPressed: () {
+                  //               setState(() {
+                  //                 bloc.add(
+                  //                     GetAggsChartEvent(listEntity[index]));
+                  //                 selectedTabIndex = index;
+                  //               });
+                  //             },
+                  //             style: ElevatedButton.styleFrom(
+                  //               elevation: 0,
+                  //               backgroundColor: selectedTabIndex == index
+                  //                   ? AppColors.primary
+                  //                   : Theme.of(context).scaffoldBackgroundColor,
+                  //               padding: const EdgeInsets.symmetric(
+                  //                   horizontal: 17, vertical: 0),
+                  //             ),
+                  //             child: Text(
+                  //               tabs[index],
+                  //               style: Theme.of(context)
+                  //                   .textTheme
+                  //                   .displaySmall!
+                  //                   .copyWith(
+                  //                     color: selectedTabIndex == index
+                  //                         ? AppColors.white
+                  //                         : AppColors.textDark,
+                  //                     fontWeight: FontWeight.w600,
+                  //                   ),
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
 
-                      // TabBarView
-                      // TabBarView(controller: Ta, children: tabContents)
+                  //     // TabBarView
+                  //     // TabBarView(controller: Ta, children: tabContents)
+                  //   ],
+                  // ),
+                  TabBar(
+                    controller: tabController,
+                    indicatorColor: AppColors.primary,
+                    labelColor: AppColors.primary,
+                    unselectedLabelColor: AppColors.textDark,
+                    onTap: (index) {
+                      setState(() {
+                        bloc.add(GetAggsChartEvent(listEntity[index]));
+                        selectedTabIndex = index;
+                      });
+                    },
+                    tabs: [
+                      for (int index = 0; index < tabs.length; index++)
+                        Tab(
+                          child: Text(
+                            tabs[index],
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall!
+                                .copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                        ),
                     ],
                   ),
                   const LineGreyPorftolioWidget(),
+                  SizedBox(
+                    height: 350,
+                    width: double.infinity,
+                    child: TabBarView(
+                      controller: tabController,
+                      children: tabContents,
+                    ),
+                  ),
 
-                  tabContents[1],
                   const LineGreyPorftolioWidget(),
 
                   // tabContents[selectedTabIndex],

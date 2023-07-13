@@ -36,28 +36,18 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<AggregatesModels> getAggregatesModels(AggregatesEntity entity) async {
     try {
       final response = await dio.get(
-        mainUrl! +
-            getAggsTickerUrl +
-            '${entity.ticker}' +
-            '/range/1/day/' +
-            '${entity.time}/' +
-            '${entity.time}' +
-            '?adjusted=true&sort=asc&limit=120&apiKey=' +
-            apiKey!,
+        '${mainUrl!}$getAggsTickerUrl${entity.ticker}/range/1/day/${entity.time}/${entity.time}?adjusted=true&sort=asc&limit=120&apiKey=${apiKey!}',
       );
 
       if (response.statusCode == 200) {
         final aggregatesModels = AggregatesModels.fromJson(response.data);
         return aggregatesModels;
       } else {
-        print(response.statusCode);
         throw ServerFailure(statusCode: response.statusCode);
       }
     } on DioError catch (exception) {
-      print(exception);
       throw ServerException(response: exception.response!);
     } catch (_) {
-      print(_);
       throw NetworkException();
     }
   }

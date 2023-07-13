@@ -10,7 +10,8 @@ class MyChartWidget extends StatelessWidget {
   final String endTime;
   final List<Result> chartData;
 
-  MyChartWidget({
+  const MyChartWidget({
+    super.key,
     required this.startTime,
     required this.endTime,
     required this.chartData,
@@ -18,54 +19,6 @@ class MyChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void calculateTrendlinePoints() {
-      // Calculate the trendline using the points in chartData
-      // Example: Linear Regression
-      int n = chartData.length;
-      double sumX = 0;
-      double sumY = 0;
-      double sumXY = 0;
-      double sumXX = 0;
-
-      for (var point in chartData) {
-        sumX += point.t.toDouble();
-        sumY += point.c;
-        sumXY += point.t.toDouble() * point.c;
-        sumXX += point.t.toDouble() * point.t.toDouble();
-      }
-
-      double slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
-      double intercept = (sumY - slope * sumX) / n;
-
-      // Generate the trendline points
-      double startX = chartData.first.t.toDouble();
-      double endX = chartData.last.t.toDouble();
-      double startY = slope * startX + intercept;
-      double endY = slope * endX + intercept;
-
-      // Add trendline annotation
-      chartData.add(Result(
-        t: startX.toInt(),
-        c: startY,
-        l: chartData[0].l,
-        h: chartData[0].h,
-        n: chartData[0].n,
-        o: chartData[0].o,
-        v: chartData[0].v,
-        vw: chartData[0].vw,
-      ));
-      chartData.add(Result(
-        t: endX.toInt(),
-        c: startY,
-        l: chartData[0].l,
-        h: chartData[0].h,
-        n: chartData[0].n,
-        o: chartData[0].o,
-        v: chartData[0].v,
-        vw: chartData[0].vw,
-      ));
-    }
-
     DateFormat dateFormat = DateFormat('MMM-dd');
     return Container(
       height: 330,
@@ -114,27 +67,42 @@ class MyChartWidget extends StatelessWidget {
                 canShowMarker: false,
               ),
               series: <ChartSeries>[
-                // LineSeries
+                // Existing LineSeries
                 LineSeries<Result, DateTime>(
                   dataSource: chartData,
                   color: AppColors.primary,
-                  pointColorMapper: (_, __) => AppColors.primary,
                   xValueMapper: (Result result, _) =>
                       DateTime.fromMillisecondsSinceEpoch(result.t),
                   yValueMapper: (Result result, _) => result.c,
-                ),
-              ],
-              annotations: <CartesianChartAnnotation>[
-                // Trendline annotation
-                CartesianChartAnnotation(
-                  widget: Container(
-                    width: 1,
-                    height: 100,
-                    color: Colors.blue,
+                  dataLabelSettings: DataLabelSettings(
+                    isVisible: true,
+                    labelAlignment: ChartDataLabelAlignment.bottom,
+                    labelPosition: ChartDataLabelPosition.inside,
+                    useSeriesColor: true,
+                    textStyle: Theme.of(context)
+                        .textTheme
+                        .displaySmall!
+                        .copyWith(color: AppColors.white, fontSize: 13),
                   ),
-                  coordinateUnit: CoordinateUnit.point,
-                  x: DateTime.fromMillisecondsSinceEpoch(chartData.last.t),
-                  y: chartData.last.c,
+                  markerSettings: const MarkerSettings(
+                    isVisible: true,
+                    shape: DataMarkerType.verticalLine,
+                    color: AppColors.primary,
+                    borderColor: Colors.green,
+                    borderWidth: 5,
+                  ),
+                  pointColorMapper: (Result result, _) {
+                    if (result.c > result.o) {
+                      return AppColors.primary;
+                    } else if (result.c < result.o) {
+                      return Colors.red;
+                    } else {
+                      return AppColors.textDark;
+                    }
+                  },
+                  // xValueMapper: (Result result, _) =>
+                  //     DateTime.fromMillisecondsSinceEpoch(result.t),
+                  // yValueMapper: (Result result, _) => result.c,
                 ),
               ],
             ),
