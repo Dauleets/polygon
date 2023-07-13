@@ -21,7 +21,7 @@ class _HomePageBodyWidgetState extends State<HomePageBodyWidget> {
 
   Future<void> _refreshData() async {
     DateTime today = DateTime.now();
-    DateTime yesterday = today.subtract(Duration(days: 1));
+    DateTime yesterday = today.subtract(const Duration(days: 1));
     String formattedDate = DateFormat('yyyy-MM-dd').format(yesterday);
     bloc.add(GetGroupedDailyEvent(formattedDate));
   }
@@ -49,8 +49,7 @@ class _HomePageBodyWidgetState extends State<HomePageBodyWidget> {
                     Container(
                       padding: EdgeInsets.zero,
                       width: double.infinity,
-                      decoration:
-                          BoxDecoration(color: Theme.of(context).cardColor),
+                      decoration: const BoxDecoration(color: AppColors.white),
                       child: Column(
                         children: [
                           const SizedBox(height: 20),
@@ -62,7 +61,7 @@ class _HomePageBodyWidgetState extends State<HomePageBodyWidget> {
                                 children: <Widget>[
                                   SvgPicture.asset(
                                     'assets/icon/pencil.svg',
-                                    color: AppColors.colorLigthGrey,
+                                    // color: AppColors.colorLigthGrey,
                                   ),
                                   const SizedBox(width: 5),
                                   Text(
@@ -91,7 +90,6 @@ class _HomePageBodyWidgetState extends State<HomePageBodyWidget> {
                                       const SizedBox(width: 5),
                                       SvgPicture.asset(
                                         'assets/icon/arrows.svg',
-                                        color: AppColors.colorLigthGrey,
                                       ),
                                     ],
                                   ),
@@ -110,7 +108,6 @@ class _HomePageBodyWidgetState extends State<HomePageBodyWidget> {
                                       const SizedBox(width: 5),
                                       SvgPicture.asset(
                                         'assets/icon/arrows.svg',
-                                        color: AppColors.colorLigthGrey,
                                       ),
                                     ],
                                   ),
@@ -163,7 +160,7 @@ class _HomePageBodyWidgetState extends State<HomePageBodyWidget> {
                                       ),
                                     ),
                                     // Изм. % $
-                                    SizedBox(width: 35),
+                                    const SizedBox(width: 35),
                                     Expanded(
                                       flex: 1,
                                       child: Column(

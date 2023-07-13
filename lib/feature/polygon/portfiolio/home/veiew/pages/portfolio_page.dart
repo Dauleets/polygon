@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../../common/theme/colors.dart';
 
 class PortFolioPage extends StatelessWidget {
-  const PortFolioPage({Key? key});
+  const PortFolioPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class PortFolioPage extends StatelessWidget {
             .textTheme
             .displayLarge!
             .copyWith(fontWeight: FontWeight.w400),
-        title: Padding(
+        title: const Padding(
           padding: EdgeInsets.only(left: 3),
           child: Text(
             'BTC / USDT',
@@ -26,7 +26,7 @@ class PortFolioPage extends StatelessWidget {
             icon: SvgPicture.asset('assets/icon/search.svg'),
             onPressed: () {},
           ),
-          SizedBox(width: 15)
+          const SizedBox(width: 15)
         ],
       ),
       body: SafeArea(
@@ -36,7 +36,7 @@ class PortFolioPage extends StatelessWidget {
           ),
           child: Column(
             children: [
-              SizedBox(height: 22),
+              const SizedBox(height: 22),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -47,7 +47,7 @@ class PortFolioPage extends StatelessWidget {
                         .displayMedium!
                         .copyWith(fontWeight: FontWeight.w400),
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   Text(
                     '32.340,52940',
                     style: Theme.of(context).textTheme.displayLarge!.copyWith(
@@ -55,10 +55,10 @@ class PortFolioPage extends StatelessWidget {
                   ),
                 ],
               ),
-              LineGreyPorftolioWidget(),
+              const LineGreyPorftolioWidget(),
               // DetailedDataDisplayCryptoChartWidget(chartData: []),
-              DateTabBarChartsWidget(),
-              LineGreyPorftolioWidget(),
+              const DateTabBarChartsWidget(),
+              const LineGreyPorftolioWidget(),
             ],
           ),
         ),
@@ -68,7 +68,7 @@ class PortFolioPage extends StatelessWidget {
 }
 
 class DateTabBarChartsWidget extends StatefulWidget {
-  const DateTabBarChartsWidget({Key? key});
+  const DateTabBarChartsWidget({super.key});
 
   @override
   State<DateTabBarChartsWidget> createState() => _DateTabBarChartsWidgetState();
@@ -105,7 +105,7 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      primary: selectedTabIndex == index
+                      backgroundColor: selectedTabIndex == index
                           ? AppColors.primary
                           : Theme.of(context).scaffoldBackgroundColor,
                       padding: const EdgeInsets.symmetric(horizontal: 17),
@@ -122,7 +122,7 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget> {
                 // TabBarView
               ],
             ),
-            LineGreyPorftolioWidget(),
+            const LineGreyPorftolioWidget(),
             // tabContents[selectedTabIndex],
           ],
         )

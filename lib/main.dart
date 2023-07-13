@@ -31,7 +31,7 @@ class MainWidget extends StatelessWidget {
         title: 'Polygon Demo',
         debugShowCheckedModeBanner: false,
         theme: Styles.themeData(context),
-        home: HomePage(),
+        home: const HomePage(),
       ),
     );
   }

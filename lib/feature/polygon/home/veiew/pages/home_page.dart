@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../../../../common/theme/colors.dart';
 import '../widgets/home_body_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,7 +15,7 @@ class HomePage extends StatelessWidget {
               .textTheme
               .displayLarge!
               .copyWith(fontWeight: FontWeight.w400),
-          backgroundColor: Theme.of(context).cardColor,
+          backgroundColor: AppColors.white,
           title: const Padding(
             padding: EdgeInsets.only(left: 3),
             child: Text(
