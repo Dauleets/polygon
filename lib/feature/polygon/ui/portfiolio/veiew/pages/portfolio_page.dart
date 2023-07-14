@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:polygontrade/feature/polygon/portfiolio/bloc/aggs_chart_bloc.dart';
-import 'package:polygontrade/feature/polygon/portfiolio/veiew/widgets/aggs_chart_widget.dart';
-import '../../../../../common/theme/colors.dart';
-import '../../../../../common/widgets/loading.dart';
-import '../../../data/models/aggregates_models.dart';
-import '../../../domain/entity/aggregates_entity.dart';
+import '../../../../../../common/theme/colors.dart';
+import '../../../../../../common/widgets/loading.dart';
+import '../../../../data/models/aggregates_models.dart';
+import '../../../../domain/entity/aggregates_entity.dart';
+
+import '../../bloc/aggs_chart_bloc.dart';
+import '../widgets/aggs_chart_widget.dart';
 
 class PortFolioPage extends StatelessWidget {
   final String ticker;
@@ -191,8 +192,6 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget>
               currentDate.year, currentDate.month - 1, currentDate.day);
           DateTime threeMonthsAgo = DateTime(
               currentDate.year, currentDate.month - 3, currentDate.day);
-          print(oneDayAgo);
-          print(fiveDaysAgo);
 
           DateFormat dateFormat = DateFormat('yyyy-MM-dd');
           tabContents = [
@@ -292,7 +291,7 @@ class _DateTabBarChartsWidgetState extends State<DateTabBarChartsWidget>
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               const LineGreyPorftolioWidget(),
               Column(
                 children: [

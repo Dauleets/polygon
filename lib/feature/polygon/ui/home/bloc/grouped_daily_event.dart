@@ -12,3 +12,9 @@ class GetGroupedDailyEvent extends GroupedDailyEvent {
 
   const GetGroupedDailyEvent(this.time);
 }
+
+class ValueToSearchTicketEvent extends GroupedDailyEvent {
+  final String tickets;
+
+  const ValueToSearchTicketEvent(this.tickets);
+}

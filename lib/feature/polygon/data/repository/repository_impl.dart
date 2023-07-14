@@ -9,6 +9,7 @@ import '../../domain/entity/aggregates_entity.dart';
 import '../../domain/repository/repository.dart';
 import '../models/aggregates_models.dart';
 import '../models/grouped_daily_models.dart';
+import '../models/stocks_models.dart';
 import '../remote_source/remote_source.dart';
 import '../remote_source/remote_source_impl.dart';
 
@@ -48,6 +49,19 @@ class RepositoryImpl implements Repository {
       final agregatesModels =
           await loginRemoteDataSource.getAggregatesModels(entity);
       return Right(agregatesModels);
+    } on ServerException catch (error) {
+      return Left(ServerFailure(statusCode: error.response.statusCode));
+    } on NetworkException {
+      return Left(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<StockModel>>> searchTickers(String ticker) async {
+    try {
+      await _checkConnectivity();
+      final searchTick = await loginRemoteDataSource.searchTickers(ticker);
+      return Right(searchTick);
     } on ServerException catch (error) {
       return Left(ServerFailure(statusCode: error.response.statusCode));
     } on NetworkException {

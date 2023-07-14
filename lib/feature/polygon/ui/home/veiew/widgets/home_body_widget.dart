@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:polygontrade/feature/polygon/portfiolio/veiew/pages/portfolio_page.dart';
 
-import '../../../../../common/theme/colors.dart';
-import '../../../../../common/widgets/loading.dart';
+import '../../../../../../common/theme/colors.dart';
+import '../../../../../../common/widgets/loading.dart';
+import '../../../portfiolio/veiew/pages/portfolio_page.dart';
 import '../../bloc/grouped_daily_bloc.dart';
 
 class HomePageBodyWidget extends StatefulWidget {

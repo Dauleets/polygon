@@ -8,6 +8,7 @@ import '../../../../injection.dart';
 import '../../domain/entity/aggregates_entity.dart';
 import '../models/aggregates_models.dart';
 import '../models/grouped_daily_models.dart';
+import '../models/stocks_models.dart';
 
 class RemoteDataSourceImpl implements RemoteDataSource {
   final Dio dio = sl.get<Dio>();
@@ -42,6 +43,32 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       if (response.statusCode == 200) {
         final aggregatesModels = AggregatesModels.fromJson(response.data);
         return aggregatesModels;
+      } else {
+        throw ServerFailure(statusCode: response.statusCode);
+      }
+    } on DioError catch (exception) {
+      throw ServerException(response: exception.response!);
+    } catch (_) {
+      throw NetworkException();
+    }
+  }
+
+  @override
+  Future<List<StockModel>> searchTickers(String ticker) async {
+    try {
+      final response = await dio.get(
+        '${mainUrl!}$serachTickersUrl$ticker&active=true&apiKey=$apiKey',
+      );
+
+      if (response.statusCode == 200) {
+        final jsonData = response.data;
+        final List<dynamic> results = jsonData['results'];
+
+        List<StockModel> stockList = results.map((json) {
+          return StockModel.fromJson(json);
+        }).toList();
+
+        return stockList;
       } else {
         throw ServerFailure(statusCode: response.statusCode);
       }

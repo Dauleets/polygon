@@ -12,8 +12,8 @@ import 'feature/polygon/data/remote_source/remote_source.dart';
 import 'feature/polygon/data/remote_source/remote_source_impl.dart';
 import 'feature/polygon/data/repository/repository_impl.dart';
 import 'feature/polygon/domain/repository/repository.dart';
-import 'feature/polygon/home/bloc/grouped_daily_bloc.dart';
-import 'feature/polygon/portfiolio/bloc/aggs_chart_bloc.dart';
+import 'feature/polygon/ui/home/bloc/grouped_daily_bloc.dart';
+import 'feature/polygon/ui/portfiolio/bloc/aggs_chart_bloc.dart';
 
 final sl = GetIt.instance;
 

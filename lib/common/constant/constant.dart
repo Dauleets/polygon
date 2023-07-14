@@ -13,3 +13,4 @@ final networkInfo = NetworkFailure();
 const String getAllGroupedDailyUrl =
     'v2/aggs/grouped/locale/global/market/crypto/';
 const String getAggsTickerUrl = 'v2/aggs/ticker/';
+const String serachTickersUrl = 'v3/reference/tickers?ticker=';

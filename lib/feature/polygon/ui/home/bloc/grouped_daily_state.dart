@@ -28,3 +28,21 @@ class GroupedDailyStateError extends GroupedDailyState {
   @override
   List<Object> get props => [error];
 }
+
+class SearchTickersStateLoaded extends GroupedDailyState {
+  final List<StockModel> tickets;
+
+  const SearchTickersStateLoaded(this.tickets);
+
+  @override
+  List<Object> get props => [tickets];
+}
+
+class SearchTickersStateError extends GroupedDailyState {
+  final String error;
+
+  const SearchTickersStateError(this.error);
+
+  @override
+  List<Object> get props => [error];
+}

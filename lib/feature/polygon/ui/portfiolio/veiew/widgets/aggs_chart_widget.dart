@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:polygontrade/common/theme/colors.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../data/models/aggregates_models.dart';
+import '../../../../data/models/aggregates_models.dart';
 
 class MyChartWidget extends StatelessWidget {
   final String startTime;
