@@ -1,8 +1,8 @@
-Flutter Cryptocurrency Price Viewer
+# Flutter Cryptocurrency Price Viewer
 
 This Flutter application allows users to view current and historical price data of cryptocurrencies using the Polygon.io API.
 
-Features
+# Features
 
 Display a list of cryptocurrencies with their current prices.
 View detailed information and charts for each cryptocurrency.
@@ -16,28 +16,21 @@ Git (for version control)
 Rest API from Polygon.io (for fetching cryptocurrency data)
 Installation
 
-Fork the repository.
+# Fork the repository.
 Clone the forked repository to your local machine using the command:
-bash
-Copy code
 git clone https://github.com/your-username/flutter-cryptocurrency-price-viewer.git
 Navigate to the project directory:
-bash
-Copy code
 cd flutter-cryptocurrency-price-viewer
 Install the project dependencies:
-bash
-Copy code
 flutter pub get
 Run the application on a connected device or emulator:
-bash
-Copy code
 flutter run
-Project Structure
+
+# Project Structure
 
 The project follows the Clean Architecture principles and uses the BLoC (Business Logic Component) state management pattern.
 
-The main directories and files in the project are:
+# The main directories and files in the project are:
 
 lib/: Contains the main source code of the Flutter application.
 common/: Contains core functionalities and utilities.
