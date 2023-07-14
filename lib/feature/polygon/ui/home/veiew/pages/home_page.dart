@@ -17,21 +17,23 @@ class HomePage extends StatelessWidget {
     return ScaffoldMessenger(
       key: scaffoldMessengerKey,
       child: Scaffold(
-        appBar: const SearchCryptoWidget(),
+        appBar:
+            const SearchCryptoWidget(), // Виджет AppBar для поиска криптовалют
         body: BlocConsumer<GroupedDailyBloc, GroupedDailyState>(
           listener: (context, state) {
             if (state is SearchTickersStateLoaded && state.tickets.isEmpty) {
-              showCustomSnackBar(context, 'не найдено');
+              showCustomSnackBar(context,
+                  'не найдено'); // Отображение сообщения Snackbar, если список криптовалют пуст
             }
           },
           builder: (context, state) {
             if (state is SearchTickersStateLoaded) {
-              return const BodySearchTickersWidget();
+              return const BodySearchTickersWidget(); // Виджет для отображения найденных криптовалют
             }
             if (state is GroupedDailyStateLoaded) {
-              return const HomePageBodyWidget();
+              return const HomePageBodyWidget(); // Виджет для отображения списка криптовалют
             } else {
-              return const HomePageBodyWidget();
+              return const HomePageBodyWidget(); // Виджет для отображения списка криптовалют по умолчанию
             }
           },
         ),

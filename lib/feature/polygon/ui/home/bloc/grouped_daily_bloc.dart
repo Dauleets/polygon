@@ -15,19 +15,23 @@ class GroupedDailyBloc extends Bloc<GroupedDailyEvent, GroupedDailyState> {
 
   GroupedDailyBloc() : super(GroupedDailyInitial()) {
     on<GetGroupedDailyEvent>((event, emit) async {
-      emit(GroupedDailyStateLoading());
+      emit(GroupedDailyStateLoading()); // Изменение состояния на "загрузка"
       final studentsEither = await listStudentsUsecase.call(event.time);
       studentsEither.fold(
-        (failure) => emit(GroupedDailyStateError(failure.message)),
-        (groupedDaily) => emit(GroupedDailyStateLoaded(groupedDaily)),
+        (failure) => emit(GroupedDailyStateError(failure
+            .message)), // Изменение состояния на "ошибка" при неудачном запросе
+        (groupedDaily) => emit(GroupedDailyStateLoaded(
+            groupedDaily)), // Изменение состояния на "загружено" при успешном запросе
       );
     });
     on<ValueToSearchTicketEvent>((event, emit) async {
-      emit(GroupedDailyStateLoading());
+      emit(GroupedDailyStateLoading()); // Изменение состояния на "загрузка"
       final studentsEither = await searchUseCaseUseCase.call(event.tickets);
       studentsEither.fold(
-        (failure) => emit(SearchTickersStateError(failure.message)),
-        (groupedDaily) => emit(SearchTickersStateLoaded(groupedDaily)),
+        (failure) => emit(SearchTickersStateError(failure
+            .message)), // Изменение состояния на "ошибка" при неудачном запросе поиска
+        (groupedDaily) => emit(SearchTickersStateLoaded(
+            groupedDaily)), // Изменение состояния на "загружено" при успешном запросе поиска
       );
     });
   }

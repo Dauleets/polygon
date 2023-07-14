@@ -31,8 +31,12 @@ class MainWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => di.sl<GroupedDailyBloc>()),
-        BlocProvider(create: (context) => di.sl<AggsChartBloc>()),
+        BlocProvider(
+            create: (context) => di.sl<
+                GroupedDailyBloc>()), // Создание провайдера для Bloc GroupedDailyBloc
+        BlocProvider(
+            create: (context) => di.sl<
+                AggsChartBloc>()), // Создание провайдера для Bloc AggsChartBloc
       ],
       child: MaterialApp(
         title: 'Polygon Demo',

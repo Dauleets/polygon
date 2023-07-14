@@ -62,13 +62,6 @@ class _SearchCryptoWidgetState extends State<SearchCryptoWidget> {
         title: _isSearching
             ? Container(
                 padding: const EdgeInsets.only(top: 19),
-                // decoration: BoxDecoration(
-                //   borderRadius: BorderRadius.all(Radius.circular(8)),
-                //   border: Border.all(
-                //     width: 2,
-                //     color: AppColors.colorLigthGrey,
-                //   ),
-                // ),
                 child: TextField(
                   controller: _searchController,
                   maxLength: 20,
@@ -80,20 +73,17 @@ class _SearchCryptoWidgetState extends State<SearchCryptoWidget> {
                         ? IconButton(
                             icon: SvgPicture.asset(
                               'assets/icon/clear.svg',
-                              // color: AppColors.colorLigthGrey,
                             ),
                             onPressed: _cancelSearch,
                           )
                         : IconButton(
                             icon: SvgPicture.asset(
                               'assets/icon/search_appbar.svg',
-                              // color: AppColors.colorLigthGrey,
                             ),
                             onPressed: _cancelSearch,
                           ),
                     hintText: 'Тикер / Название',
                     hintStyle: const TextStyle(color: AppColors.colorLigthGrey),
-                    // border: InputBorder.none,
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                       borderSide: BorderSide(

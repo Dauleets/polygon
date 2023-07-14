@@ -7,6 +7,7 @@ import 'package:polygontrade/feature/polygon/domain/usecase/chart_agregates_usec
 part 'aggs_chart_event.dart';
 part 'aggs_chart_state.dart';
 
+// Блок управления состоянием графиков
 class AggsChartBloc extends Bloc<AggsChartEvent, AggsChartState> {
   final FecthAggstoChartUseCase fecthAggstoChartUseCase =
       FecthAggstoChartUseCase();

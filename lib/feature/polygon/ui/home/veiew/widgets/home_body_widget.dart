@@ -62,7 +62,6 @@ class _HomePageBodyWidgetState extends State<HomePageBodyWidget> {
                                 children: <Widget>[
                                   SvgPicture.asset(
                                     'assets/icon/pencil.svg',
-                                    // color: AppColors.colorLigthGrey,
                                   ),
                                   const SizedBox(width: 5),
                                   Text(

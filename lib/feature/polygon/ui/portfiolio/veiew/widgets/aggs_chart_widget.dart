@@ -45,8 +45,10 @@ class MyChartWidget extends StatelessWidget {
                   width: 2,
                   color: Color.fromRGBO(238, 243, 245, 1),
                 ),
-                minimum: calculateMinValue() - 1, // Adjusting min value
-                maximum: calculateMaxValue() + 3, // Adjusting max value
+                minimum:
+                    calculateMinValue() - 1, // Расчет минимального значения
+                maximum:
+                    calculateMaxValue() + 3, // Расчет максимального значения
                 labelFormat: '{value}',
                 labelStyle: Theme.of(context)
                     .textTheme
@@ -67,7 +69,7 @@ class MyChartWidget extends StatelessWidget {
                 canShowMarker: false,
               ),
               series: <ChartSeries>[
-                // Existing LineSeries
+                // Существующая LineSeries
                 LineSeries<Result, DateTime>(
                   dataSource: chartData,
                   color: AppColors.primary,
@@ -122,7 +124,7 @@ class MyChartWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'HIGH:',
+                          'HIGH:', // Надпись "HIGH"
                           style: Theme.of(context)
                               .textTheme
                               .displayMedium!
@@ -132,7 +134,7 @@ class MyChartWidget extends StatelessWidget {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          chartData[0].h.toString(),
+                          chartData[0].h.toString(), // Значение HIGH
                           style: Theme.of(context)
                               .textTheme
                               .displayMedium!
@@ -147,7 +149,7 @@ class MyChartWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'LOW:',
+                          'LOW:', // Надпись "LOW"
                           style: Theme.of(context)
                               .textTheme
                               .displayMedium!
@@ -158,7 +160,7 @@ class MyChartWidget extends StatelessWidget {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          chartData[0].l.toString(),
+                          chartData[0].l.toString(), // Значение LOW
                           style: Theme.of(context)
                               .textTheme
                               .displayMedium!
@@ -178,7 +180,7 @@ class MyChartWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'OPEN:',
+                          'OPEN:', // Надпись "OPEN"
                           style: Theme.of(context)
                               .textTheme
                               .displayMedium!
@@ -189,7 +191,7 @@ class MyChartWidget extends StatelessWidget {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          chartData[0].o.toString(),
+                          chartData[0].o.toString(), // Значение OPEN
                           style: Theme.of(context)
                               .textTheme
                               .displayMedium!
@@ -204,7 +206,7 @@ class MyChartWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'CLOSE:',
+                          'CLOSE:', // Надпись "CLOSE"
                           style: Theme.of(context)
                               .textTheme
                               .displayMedium!
@@ -215,7 +217,7 @@ class MyChartWidget extends StatelessWidget {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          chartData[0].c.toString(),
+                          chartData[0].c.toString(), // Значение CLOSE
                           style: Theme.of(context)
                               .textTheme
                               .displayMedium!
