@@ -26,7 +26,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       } else {
         throw ServerFailure(statusCode: response.statusCode);
       }
-    } on DioError catch (exception) {
+    } on DioException catch (exception) {
       throw ServerException(response: exception.response!);
     } catch (_) {
       throw NetworkException();
@@ -46,7 +46,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       } else {
         throw ServerFailure(statusCode: response.statusCode);
       }
-    } on DioError catch (exception) {
+    } on DioException catch (exception) {
       throw ServerException(response: exception.response!);
     } catch (_) {
       throw NetworkException();
@@ -72,7 +72,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       } else {
         throw ServerFailure(statusCode: response.statusCode);
       }
-    } on DioError catch (exception) {
+    } on DioException catch (exception) {
       throw ServerException(response: exception.response!);
     } catch (_) {
       throw NetworkException();

@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
     return ScaffoldMessenger(
       key: scaffoldMessengerKey,
       child: Scaffold(
-        appBar: SearchCryptoWidget(),
+        appBar: const SearchCryptoWidget(),
         body: BlocConsumer<GroupedDailyBloc, GroupedDailyState>(
           listener: (context, state) {
             if (state is SearchTickersStateLoaded && state.tickets.isEmpty) {
@@ -26,12 +26,12 @@ class HomePage extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is SearchTickersStateLoaded) {
-              return BodySearchTickersWidget();
+              return const BodySearchTickersWidget();
             }
             if (state is GroupedDailyStateLoaded) {
-              return HomePageBodyWidget();
+              return const HomePageBodyWidget();
             } else {
-              return HomePageBodyWidget();
+              return const HomePageBodyWidget();
             }
           },
         ),

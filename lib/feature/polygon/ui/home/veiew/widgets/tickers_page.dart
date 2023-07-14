@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../../../common/theme/colors.dart';
 import '../../../../../../common/widgets/loading.dart';
-import '../../../../../../common/widgets/show_custom_snack_bar.dart';
 import '../../../portfiolio/veiew/pages/portfolio_page.dart';
 import '../../bloc/grouped_daily_bloc.dart';
-import 'home_body_widget.dart';
-import '../pages/home_page.dart';
 
 class BodySearchTickersWidget extends StatefulWidget {
   const BodySearchTickersWidget({Key? key}) : super(key: key);
@@ -85,16 +80,17 @@ class _BodySearchTickersWidgetState extends State<BodySearchTickersWidget> {
                                                         fontWeight:
                                                             FontWeight.w400),
                                               ),
-                                              SizedBox(width: 9),
+                                              const SizedBox(width: 9),
                                               Container(
-                                                padding: EdgeInsets.all(2),
+                                                padding:
+                                                    const EdgeInsets.all(2),
                                                 decoration: BoxDecoration(
                                                     border: Border.all(
                                                         width: 1,
                                                         color: AppColors
                                                             .colorLigthGrey),
                                                     borderRadius:
-                                                        BorderRadius.all(
+                                                        const BorderRadius.all(
                                                             Radius.circular(
                                                                 5))),
                                                 child: Text(
@@ -111,7 +107,7 @@ class _BodySearchTickersWidgetState extends State<BodySearchTickersWidget> {
                                               ),
                                             ],
                                           ),
-                                          SizedBox(height: 5),
+                                          const SizedBox(height: 5),
                                           Text(
                                             result.market.toString(),
                                             style: Theme.of(context)

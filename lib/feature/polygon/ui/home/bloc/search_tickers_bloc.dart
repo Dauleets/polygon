@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:polygontrade/feature/polygon/data/models/stocks_models.dart';
 import 'package:polygontrade/feature/polygon/domain/usecase/search_widget_usecase.dart';
 

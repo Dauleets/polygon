@@ -13,7 +13,7 @@ class SearchCryptoWidget extends StatefulWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(90);
   @override
-  _SearchCryptoWidgetState createState() => _SearchCryptoWidgetState();
+  State<SearchCryptoWidget> createState() => _SearchCryptoWidgetState();
 }
 
 class _SearchCryptoWidgetState extends State<SearchCryptoWidget> {
@@ -61,7 +61,7 @@ class _SearchCryptoWidgetState extends State<SearchCryptoWidget> {
         backgroundColor: AppColors.white,
         title: _isSearching
             ? Container(
-                padding: EdgeInsets.only(top: 19),
+                padding: const EdgeInsets.only(top: 19),
                 // decoration: BoxDecoration(
                 //   borderRadius: BorderRadius.all(Radius.circular(8)),
                 //   border: Border.all(
@@ -75,7 +75,7 @@ class _SearchCryptoWidgetState extends State<SearchCryptoWidget> {
                   maxLines: 1,
                   readOnly: false,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
+                    prefixIcon: const Icon(Icons.search),
                     suffixIcon: _isSearching
                         ? IconButton(
                             icon: SvgPicture.asset(
@@ -92,9 +92,9 @@ class _SearchCryptoWidgetState extends State<SearchCryptoWidget> {
                             onPressed: _cancelSearch,
                           ),
                     hintText: 'Тикер / Название',
-                    hintStyle: TextStyle(color: AppColors.colorLigthGrey),
+                    hintStyle: const TextStyle(color: AppColors.colorLigthGrey),
                     // border: InputBorder.none,
-                    border: OutlineInputBorder(
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                       borderSide: BorderSide(
                           width: 2, color: Color.fromRGBO(146, 166, 185, 1)),
