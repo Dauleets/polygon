@@ -2,6 +2,20 @@
 
 This Flutter application allows users to view current and historical price data of cryptocurrencies using the Polygon.io API.
 
+## Getting Started
+
+To get started with this Flutter project, follow these steps:
+
+1. Install Flutter by following the instructions in the [Flutter documentation](https://flutter.dev/docs/get-started/install).
+2. Clone this repository to your local machine.
+3. Open the project in your preferred IDE or editor.
+4. Run `flutter pub get` to install the project dependencies.
+5. Connect a device or start an emulator.
+6. Run `flutter run` to build and launch the application on your device or emulator.
+
+For more information on Flutter development, you can refer to the [online documentation](https://docs.flutter.dev/), which provides tutorials, samples, and a full API reference.
+
+
 # Features
 
 Display a list of cryptocurrencies with their current prices.
